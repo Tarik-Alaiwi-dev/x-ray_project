@@ -3,7 +3,7 @@
   <div id="wrapper">
     <nav class="navbar is-dark">
       <div class="navbar-brand">
-        <router-link to="/" class="navbar-item">X-RAY</router-link>
+        <router-link to="/" class="navbar-item"><strong>X-RAY</strong></router-link>
 
         <a class="navbar-burger" aria-label="menu" aiara-expanded="false" data-target="navbar-menu">
           <span aria-hidden="true"></span>
@@ -18,7 +18,15 @@
         </div>
       </div>
     </nav>
-    <router-view/>
+
+    <section class="section">
+      <router-view/>
+    </section>
+
+    <footer class="footer">
+      <p class="has-text-centered">Copyright (c) 2024</p>
+    </footer>
+
   </div>
 
 </template>
