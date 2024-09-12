@@ -7,6 +7,7 @@ class Prediction(models.Model):
 
     class Meta:
         ordering = ['-date']
+        get_latest_by = 'date'
     
     def __str__(self):
         return self.date.strftime("%Y-%m-%d %H:%M:%S")
