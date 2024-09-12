@@ -9,8 +9,10 @@
       </div>
       <div class="column is-flex is-flex-direction-column is-align-items-center">
         <div class="">TODAY</div>
-        <figure class="image is-3by2"><img src="" alt=""></figure>
-        <button class="button is-active">UPLOAD</button>
+        <form @submit.prevent="submitForm">
+        <input type="file" @change="onFileChange" required />
+        <button class="button is-active" type="submit">Submit</button>
+      </form>
       </div>
     </div>
 
@@ -18,10 +20,36 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'HomeView',
-  components: {
-    
-  }
-}
+  data() {
+    return {
+      formData: {
+        image: null, // For storing the selected image
+      },
+    };
+  },
+  methods: {
+    onFileChange(event) {
+      this.formData.image = event.target.files[0]; // Store the file in formData
+    },
+    async submitForm() {
+      const formData = new FormData(); // Create FormData object
+      formData.append('image', this.formData.image); // Append the image file
+
+      try {
+        const response = await axios.post('http://localhost:8000/api/v1/submit-form/', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data', // Set multipart header
+          },
+        });
+        console.log('Form submitted successfully:', response.data);
+      } catch (error) {
+        console.error('Error submitting the form:', error.response.data);
+      }
+    },
+  },
+};
 </script>
