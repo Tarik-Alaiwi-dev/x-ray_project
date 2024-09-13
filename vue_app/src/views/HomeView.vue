@@ -3,16 +3,20 @@
     
     <div class="columns is-mobile grid-xl">
       <div class="column is-flex is-flex-direction-column is-align-items-center">
-        <div class="">{{ formatDate(object.date) }}</div>
+        <div class="is-size-4 has-text-weight-bold">{{ formatDate(object.date) }}</div>
         <figure class="image is-3by2"><img :src="`${object.image}`"></figure>
-        <div class="text-centered">inference</div>
+        <img :src="`${object.image}`" class="image is-3by2 mt-4">
+        <div class="text-centered mt-6 is-size-4 has-text-weight-bold">YOU DO NOT HAVE PNEUMONIA</div>
       </div>
-      <img :src="`${object.image}`">
       <div class="column is-flex is-flex-direction-column is-align-items-center">
-        <div class="">TODAY</div>
-        <form @submit.prevent="submitForm">
-        <input type="file" @change="onFileChange" required />
-        <button class="button is-active" type="submit">Submit</button>
+        <div class="is-size-4 has-text-weight-bold">TODAY</div>
+        <form @submit.prevent="submitForm" class="is-flex is-flex-direction-column is-align-items-center mt-4">
+          <div class="file-input-container p-5">
+          <div class="file-input-text">
+            DRAG HERE <br> OR <br> CLICK TO SEND
+          </div>
+          <input type="file" @change="onFileChange" required />
+        </div>
       </form>
       </div>
     </div>
@@ -39,6 +43,7 @@ export default {
   methods: {
     onFileChange(event) {
       this.formData.image = event.target.files[0]; // Store the file in formData
+      this.submitForm();
     },
     async fetchData() {
       try {
@@ -61,6 +66,7 @@ export default {
           },
         });
         console.log('Form submitted successfully:', response.data);
+        location.reload();
       } catch (error) {
         console.error('Error submitting the form:', error.response.data);
       }
@@ -77,3 +83,33 @@ export default {
   },
 };
 </script>
+
+<style>
+    .file-input-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2; /* 3:2 aspect ratio */
+      border: 3px dashed #3a4252;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+    }
+
+    .file-input-container input[type="file"] {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .file-input-text {
+      font-size: 1.5rem;
+      line-height: 1.5;
+      pointer-events: none;
+    }
+</style>
