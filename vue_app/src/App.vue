@@ -3,7 +3,7 @@
   <div id="wrapper">
     <nav class="navbar is-dark">
       <div class="navbar-brand p-1">
-        <router-link to="/" class="navbar-item"><strong>PDS</strong></router-link>
+        <router-link to="/" class="navbar-item"><strong>Pneumonia Detection System</strong></router-link>
 
         <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
           <span aria-hidden="true"></span>
