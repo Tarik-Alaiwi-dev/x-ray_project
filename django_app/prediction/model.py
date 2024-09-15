@@ -3,7 +3,6 @@ import torch.nn as nn
 from torchvision import transforms, models
 from PIL import Image
 from io import BytesIO
-import requests
 
 # Load the model
 def load_model(model_path):
