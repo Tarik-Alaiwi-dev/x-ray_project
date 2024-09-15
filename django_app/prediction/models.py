@@ -1,6 +1,5 @@
 from django.db import models
 
-import torch.nn.functional as F
 
 class Prediction(models.Model):
     image = models.ImageField(upload_to='prediction_images')
