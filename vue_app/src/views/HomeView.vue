@@ -6,7 +6,8 @@
         <div class="is-size-4 has-text-weight-bold">{{ formatDate(object.date) }}</div>
         <figure class="image is-3by2"><img :src="`${object.image}`"></figure>
         <img :src="`${object.image}`" class="image is-3by2 mt-4">
-        <div class="text-centered mt-6 is-size-4 has-text-weight-bold">YOU DO NOT HAVE PNEUMONIA</div>
+        <div v-if="object.inference === 'YOU PROBABLY DO NOT HAVE PNEUMONIA'" class="text-centered mt-6 is-size-4 has-text-weight-bold notification is-success">{{ object.inference }}</div>
+        <div v-else class="text-centered mt-6 is-size-4 has-text-weight-bold notification is-danger">{{ object.inference }}</div>
       </div>
       <div class="column is-flex is-flex-direction-column is-align-items-center">
         <div class="is-size-4 has-text-weight-bold">TODAY</div>
@@ -60,7 +61,7 @@ export default {
       formData.append('image', this.formData.image); // Append the image file
 
       try {
-        const response = await axios.post('http://localhost:8000/api/v1/submit-form/', formData, {
+        const response = await axios.post('http://localhost:8000/api/v1/predict/', formData, {
           headers: {
             'Content-Type': 'multipart/form-data', // Set multipart header
           },
@@ -75,7 +76,7 @@ export default {
     formatDate(dateString) {
       const date = new Date(dateString);
       const day = String(date.getDate()).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+      const month = String(date.getMonth() + 1).padStart(2, '0'); 
       const year = date.getFullYear();
       return `${day}-${month}-${year}`;
     },
@@ -88,7 +89,7 @@ export default {
     .file-input-container {
       position: relative;
       width: 100%;
-      aspect-ratio: 3 / 2; /* 3:2 aspect ratio */
+      aspect-ratio: 3 / 2; 
       border: 3px dashed #3a4252;
       display: flex;
       justify-content: center;

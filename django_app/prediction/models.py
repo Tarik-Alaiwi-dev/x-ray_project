@@ -1,5 +1,7 @@
 from django.db import models
 
+import torch.nn.functional as F
+
 class Prediction(models.Model):
     image = models.ImageField(upload_to='prediction_images')
     date = models.DateTimeField(auto_now_add=True)
@@ -11,4 +13,7 @@ class Prediction(models.Model):
     
     def __str__(self):
         return self.date.strftime("%Y-%m-%d %H:%M:%S")
+    
+    
+    
     
