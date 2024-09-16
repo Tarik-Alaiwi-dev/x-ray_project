@@ -47,14 +47,19 @@ export default {
       this.submitForm();
     },
     async fetchData() {
-      try {
-        const response = await axios.get('http://localhost:8000/api/v1/get-form/');
-        this.object = response.data; // Store data in the objects array
-        console.log(this.objects);
-        
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+      this.$store.commit('setIsLoading', true);
+
+      await axios
+          .get('http://localhost:8000/api/v1/get-form/')
+          .then(response => {
+            this.object = response.data  // Store data in the objects array
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          })
+
+
+      this.$store.commit('setIsLoading', false); 
     },
     async submitForm() {
       const formData = new FormData(); // Create FormData object

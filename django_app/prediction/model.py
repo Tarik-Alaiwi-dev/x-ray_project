@@ -46,5 +46,4 @@ def predict(image_file, model_path):
     class_names = ['YOU PROBABLY DO NOT HAVE PNEUMONIA', 'YOU MIGHT HAVE PNEUMONIA']
     predicted_class = class_names[predicted.item()]
 
-    print(f"Predicted class: {predicted_class}")
     return predicted_class
