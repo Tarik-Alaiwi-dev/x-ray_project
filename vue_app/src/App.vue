@@ -14,7 +14,7 @@
 
       <div class="navbar-menu" id="navbar-menu" v-bind:class="{ 'is-active': showMobileMenu }">
         <div class="navbar-end">
-          <router-link to="/log-out" class="button is-danger m-3"><span>Log Out</span></router-link>
+          <router-link to="/log-out" class="button is-danger m-3"><span> <i class="fa-solid fa-right-from-bracket"></i> Log Out</span></router-link>
         </div>
       </div>
     </nav>
