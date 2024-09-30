@@ -48,7 +48,8 @@ INSTALLED_APPS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
+    "https://pds-test.vercel.app",
+    "http://localhost:8080"
 ]
 
 MIDDLEWARE = [
