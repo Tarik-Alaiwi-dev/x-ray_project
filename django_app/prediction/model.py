@@ -3,6 +3,13 @@ import torch.nn as nn
 from torchvision import transforms, models
 from PIL import Image
 from io import BytesIO
+import os
+import io
+import base64
+
+from gradio_client import Client, handle_file
+from gradio_client.data_classes import FileData
+from tempfile import NamedTemporaryFile
 
 # Load the model
 def load_model(model_path):
@@ -33,17 +40,24 @@ def preprocess_image(image_file):
     return image
 
 # Predict the class of the image
-def predict(image_file, model_path):
-    model = load_model(model_path)
-    image = preprocess_image(image_file)
+def predict(image_file):
+    # Create a Gradio client for the Hugging Face Space
+    client = Client("TarikKarol/pneumonia")
 
-    with torch.no_grad():
-        image = image.to(next(model.parameters()).device)
+        # Send the temporary image file to the Gradio Space for prediction
+    result = client.predict(
+        image_file,  # Send the FileData object
+        api_name="/predict"
+    )
 
-        outputs = model(image)
-        _, predicted = torch.max(outputs, 1)
+        # Debugging: Print the raw result to see what we receive
+    print("Raw prediction result:", result)
 
+        # Define the class names based on your model's output
     class_names = ['YOU PROBABLY DO NOT HAVE PNEUMONIA', 'YOU MIGHT HAVE PNEUMONIA']
-    predicted_class = class_names[predicted.item()]
 
+        # Access the predicted class (adjust index based on result structure)
+    predicted_class_index = int(result[0])  # Assuming the result is a list
+    predicted_class = class_names[predicted_class_index]
+    
     return predicted_class
