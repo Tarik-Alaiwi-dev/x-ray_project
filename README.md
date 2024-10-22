@@ -57,5 +57,5 @@ The project is still under development. The final application should be fitted t
 - separate views for doctors, patients, and radiographers
 - authentication feature for each type of user
 - another table for doctors and radiographers or new field(s) in the 'users' table
-- tests
+- add tests
 - improve the model and add notebook from training and data preprocessing
