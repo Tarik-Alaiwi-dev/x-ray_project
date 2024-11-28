@@ -10,10 +10,6 @@ Users can post an X-ray image of lungs, and the application will use its model t
 </p>
 <br><br>
 
-## Live Demo
-The entire application is not yet hosted, so for now, you can only test it locally. However, you can check out the AI model [here](https://huggingface.co/spaces/TarikKarol/pneumonia).
-<br><br>
-
 ## How To Run It Locally
 ### Steps for the first console
 1. Clone this repository
