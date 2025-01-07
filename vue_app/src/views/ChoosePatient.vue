@@ -1,6 +1,6 @@
 <template>
     <!-- Patient Grid -->
-    <div class="container mt-6 has-text-centered">
+    <div class="container mt-6 has-text-centered full-height">
       <div class="tile is-ancestor is-justify-content-center">
         <div class="tile is-parent" v-for="patient in patients" :key="patient.id">
           <article class="tile is-child box">
@@ -31,6 +31,13 @@
     justify-content: center;
     background-color: #f5f5f5;
   }
+
+  .full-height {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   </style>
   
   

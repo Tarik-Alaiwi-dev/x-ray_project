@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="home full-height">
       
       <div class="columns is-mobile grid-xl">
         <!-- v-if="object.date === " -->
@@ -121,5 +121,12 @@
         line-height: 1.5;
         pointer-events: none;
       }
+
+        .full-height {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   </style>
   

@@ -4,6 +4,8 @@ import PatientView from '../views/PatientView.vue'
 import TechnicianView from '../views/TechnicianView.vue'
 import LoginView from '../views/LoginView.vue'
 import ChoosePatient from '../views/ChoosePatient.vue'
+import ChooseDate from '../views/ChooseDate.vue'
+import DoctorView from '../views/DoctorView.vue'
 
 const routes = [
   {
@@ -22,9 +24,19 @@ const routes = [
     component: TechnicianView
   },
   {
+    path: '/doctor',
+    name: 'doctor',
+    component: DoctorView
+  },
+  {
     path: '/choose-patient',
     name: 'choose-patient',
     component: ChoosePatient
+  },
+  {
+    path: '/choose-date',
+    name: 'choose-date',
+    component: ChooseDate
   },
   {
     path: '/login',

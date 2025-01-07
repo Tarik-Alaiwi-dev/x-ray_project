@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="login full-height">
       <div class="columns is-mobile grid-xl">
         <div class="column is-flex is-flex-direction-column is-align-items-center">
           <div class="is-size-4 has-text-weight-bold">Login</div>
@@ -108,5 +108,12 @@
   .button {
     width: 100%;
   }
+
+  .full-height {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   </style>
   
