@@ -43,7 +43,7 @@ def predict(image_file, model_path):
         outputs = model(image)
         _, predicted = torch.max(outputs, 1)
 
-    class_names = ['YOU PROBABLY DO NOT HAVE PNEUMONIA', 'YOU MIGHT HAVE PNEUMONIA']
+    class_names = ['NO PNEUMONIA DETECTED', 'PNEUMONIA DETECTED']
     predicted_class = class_names[predicted.item()]
 
     print(f"Predicted class: {predicted_class}")

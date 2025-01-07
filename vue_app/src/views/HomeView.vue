@@ -6,7 +6,7 @@
         <div class="is-size-4 has-text-weight-bold">{{ formatDate(object.date) }}</div>
         <figure class="image is-3by2"><img :src="`${object.image}`"></figure>
         <img :src="`${object.image}`" class="image is-3by2 mt-4">
-        <div v-if="object.inference === 'YOU PROBABLY DO NOT HAVE PNEUMONIA'" class="text-centered mt-6 is-size-4 has-text-weight-bold notification is-success">{{ object.inference }}</div>
+        <div v-if="object.inference === 'NO PNEUMONIA DETECTED'" class="text-centered mt-6 is-size-4 has-text-weight-bold notification is-success">{{ object.inference }}</div>
         <div v-else class="text-centered mt-6 is-size-4 has-text-weight-bold notification is-danger">{{ object.inference }}</div>
       </div>
       <div class="column is-flex is-flex-direction-column is-align-items-center">
