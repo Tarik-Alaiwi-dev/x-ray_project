@@ -1,61 +1,79 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import PatientView from '../views/PatientView.vue'
-import TechnicianView from '../views/TechnicianView.vue'
-import LoginView from '../views/LoginView.vue'
-import ChoosePatient from '../views/ChoosePatient.vue'
-import ChooseDate from '../views/ChooseDate.vue'
-import DoctorView from '../views/DoctorView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import store from '../store'; // ✅ Import Vuex store
+import HomeView from '../views/HomeView.vue';
+import PatientView from '../views/PatientView.vue';
+import TechnicianView from '../views/TechnicianView.vue';
+import LoginView from '../views/LoginView.vue';
+import ChoosePatient from '../views/ChoosePatient.vue';
+import ChooseDate from '../views/ChooseDate.vue';
+import DoctorView from '../views/DoctorView.vue';
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/patient',
-    name: 'patient',
-    component: PatientView
-  },
-  {
-    path: '/technician',
-    name: 'technician',
-    component: TechnicianView
-  },
-  {
-    path: '/doctor',
-    name: 'doctor',
-    component: DoctorView
-  },
-  {
-    path: '/choose-patient',
-    name: 'choose-patient',
-    component: ChoosePatient
-  },
-  {
-    path: '/choose-date',
-    name: 'choose-date',
-    component: ChooseDate
-  },
   {
     path: '/login',
     name: 'login',
     component: LoginView
   },
   {
+    path: '/',
+    name: 'home',
+    component: HomeView,
+    meta: { requiresAuth: true } // ✅ Protected
+  },
+  {
+    path: '/patient',
+    name: 'patient',
+    component: PatientView,
+    meta: { requiresAuth: true } // ✅ Protected
+  },
+  {
+    path: '/technician',
+    name: 'technician',
+    component: TechnicianView,
+    meta: { requiresAuth: true } // ✅ Protected
+  },
+  {
+    path: '/doctor',
+    name: 'doctor',
+    component: DoctorView,
+    meta: { requiresAuth: true } // ✅ Protected
+  },
+  {
+    path: '/choose-patient',
+    name: 'choose-patient',
+    component: ChoosePatient,
+    meta: { requiresAuth: true } // ✅ Protected
+  },
+  {
+    path: '/choose-date',
+    name: 'choose-date',
+    component: ChooseDate,
+    meta: { requiresAuth: true } // ✅ Protected
+  },
+  {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import('../views/AboutView.vue'),
+    meta: { requiresAuth: true } // ✅ Protected
   }
-]
+];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
-})
+});
 
-export default router
+// ✅ Add a global navigation guard
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = store.state.isAuthenticated;
+
+  if (!isAuthenticated && to.path !== '/login') {
+    next('/login');  // 🔴 Redirect to login if NOT logged in
+  } else if (isAuthenticated && to.path === '/login') {
+    next('/');  // 🔵 Redirect to home if ALREADY logged in
+  } else {
+    next(); // ✅ Allow navigation
+  }
+});
+
+export default router;

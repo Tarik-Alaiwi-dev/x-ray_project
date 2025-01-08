@@ -5,29 +5,31 @@ export default createStore({
     isAuthenticated: false,
     token: '',
   },
-  getters: {
-  },
   mutations: {
     initializeStore(state) {
-      if (localStorage.getItem('token')) {
-        state.token = localStorage.getItem('token')
-        state.isAuthenticated = true
+      const token = localStorage.getItem('token');
+      if (token) {
+        state.token = token;
+        state.isAuthenticated = true;
       } else {
-        state.token = ''
-        state.isAuthenticated = false
+        state.token = '';
+        state.isAuthenticated = false;
       }
     },
     setToken(state, token) {
-      state.token = token
-      state.isAuthenticated = true
+      state.token = token;
+      state.isAuthenticated = true;
+      localStorage.setItem('token', token);  // Store token persistently
     },
     removeToken(state) {
-      state.token = ''
-      state.isAuthenticated = false
+      state.token = '';
+      state.isAuthenticated = false;
+      localStorage.removeItem('token');  // Remove token from localStorage
     }
   },
   actions: {
-  },
-  modules: {
+    logout({ commit }) {
+      commit('removeToken');
+    }
   }
-})
+});
