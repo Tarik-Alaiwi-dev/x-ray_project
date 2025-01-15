@@ -87,6 +87,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'prediction.Patient'
+
 WSGI_APPLICATION = 'django_app.wsgi.application'
 
 
