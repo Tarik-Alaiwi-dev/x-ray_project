@@ -1,24 +1,21 @@
 from django.http import JsonResponse
-
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from .serializers import PredictionSerializer, PatientSerializer
-
 from .model import load_model, predict
 from .models import Prediction, Patient
-
 import os
 
 # Load the pre-trained model
 MODEL_PATH = os.path.join(os.path.dirname(__file__), 'chest_xray_model.pth')
 model = load_model(MODEL_PATH)
 
+# Open Prediction List View
 class PredictionListAPIView(generics.GenericAPIView):
     serializer_class = PredictionSerializer
-    permission_classes = [permissions.IsAuthenticated] 
+    permission_classes = [permissions.AllowAny]  # Make it open for everyone
 
     def get(self, request, *args, **kwargs):
         latest_object = Prediction.objects.filter(user=request.user).order_by('-date').first()
@@ -28,11 +25,12 @@ class PredictionListAPIView(generics.GenericAPIView):
             return JsonResponse(serializer.data, safe=False)
         else:
             return JsonResponse({"error": "No predictions found for this user."}, status=404)
-    
-    
 
+
+# Open Image Classification View
 class ImageClassificationView(generics.CreateAPIView):
     serializer_class = PredictionSerializer
+    permission_classes = [permissions.AllowAny]  # Make it open for everyone
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -52,18 +50,18 @@ class ImageClassificationView(generics.CreateAPIView):
         return Response({
             'inference': prediction_result
         }, status=status.HTTP_200_OK)
-    
 
-# Widok do pobrania i edycji pacjenta (tylko dla zalogowanego użytkownika)
+
+# Open Patient Detail View
 class PatientDetailView(generics.RetrieveUpdateAPIView):
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]  # Make it open for everyone
 
     def get_object(self):
-        return self.request.user  # Pacjent może edytować tylko swoje dane
+        return Patient.objects.get(pk=1)  # Adjust as necessary to fetch a specific patient
 
-# Widok do logowania i generowania tokena JWT
+# Open Login View (for demonstration purposes)
 class PatientLoginView(generics.GenericAPIView):
     serializer_class = PatientSerializer
     permission_classes = [permissions.AllowAny]
@@ -73,11 +71,5 @@ class PatientLoginView(generics.GenericAPIView):
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
         if user:
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                "refresh": str(refresh),
-                "access": str(refresh.access_token),
-            }, status=status.HTTP_200_OK)
+            return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
         return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
-
-
