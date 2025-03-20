@@ -48,10 +48,11 @@ npm run serve
 <br><br>
 
 ## What's Next
-The project is still under development. The final application should be fitted to the needs of patients, medical clinics, and radiology clinics. Things to do:
-- login feature
-- separate views for doctors, patients, and radiographers
-- authentication feature for each type of user
-- another table for doctors and radiographers or new field(s) in the 'users' table
-- add tests
-- improve the model and add notebook from training and data preprocessing
+After rebuilding the app, I am improving the model for better accuracy. I am creating `2` models to make a pipeline:
+1) U-net model for lungs segmentation
+2) ViT MAE 16 model for disease classification.
+
+### First step results
+<p align="center">
+  <img src="" alt="Size Limit CLI" width="738">
+</p>
